@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Traduzione Opera</title>
 
   <!-- Bootstrap 5 CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
   <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
 
   <style>
-    body, html {
+    body,
+    html {
       margin: 0;
       padding: 0;
       height: 100%;
       background-color: black;
       color: white;
-      font-family: 'Georgia', serif;
+      font-family: "Georgia", serif;
     }
 
     .hero-image-container {
@@ -74,6 +81,14 @@
       object-fit: cover;
     }
 
+    #backButton {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10000;
+      font-size: 1.2rem;
+    }
+
     @media (max-width: 576px) {
       .call-to-action {
         font-size: 1rem;
@@ -88,24 +103,32 @@
   </style>
 </head>
 <body>
-
   <!-- Hero Section -->
   <div id="mainContent">
     <div class="hero-image-container">
-      <img src="locandina.jpeg" alt="Locandina Opera" class="hero-image">
+      <img src="locandina.jpeg" alt="Locandina Opera" class="hero-image" />
     </div>
 
     <!-- Call to Action -->
     <div class="call-to-action" onclick="playVideo()">
       <i class="bi bi-play-circle-fill"></i>
-      Tocca qui per visualizzare la traduzione del libretto non appena inizia il canto.
+      Tocca qui per visualizzare la traduzione del libretto non appena inizia il
+      canto.
     </div>
   </div>
 
   <!-- Video Fullscreen -->
   <div id="videoContainer">
+    <button
+      id="backButton"
+      class="btn btn-light"
+      onclick="exitVideo()"
+      aria-label="Torna alla pagina iniziale"
+    >
+      <i class="bi bi-arrow-left-circle-fill"></i> Torna indietro
+    </button>
     <video id="fullVideo" controls autoplay>
-      <source src="./VideoTraduzione.mp4" type="video/mp4">
+      <source src="./VideoTraduzione.mp4" type="video/mp4" />
       Il tuo browser non supporta la riproduzione del video.
     </video>
   </div>
@@ -116,16 +139,16 @@
   <script>
     function playVideo() {
       // Nasconde il contenuto iniziale
-      document.getElementById('mainContent').style.display = 'none';
+      document.getElementById("mainContent").style.display = "none";
 
       // Mostra il video
-      const videoContainer = document.getElementById('videoContainer');
-      const video = document.getElementById('fullVideo');
+      const videoContainer = document.getElementById("videoContainer");
+      const video = document.getElementById("fullVideo");
 
-      videoContainer.style.display = 'block';
+      videoContainer.style.display = "block";
       video.play();
 
-      // Richiesta modalità fullscreen
+      // Richiesta modalità fullscreen (funziona su desktop)
       if (video.requestFullscreen) {
         video.requestFullscreen();
       } else if (video.webkitRequestFullscreen) {
@@ -136,35 +159,34 @@
     }
 
     function exitVideo() {
-      const videoContainer = document.getElementById('videoContainer');
-      const mainContent = document.getElementById('mainContent');
-      const video = document.getElementById('fullVideo');
+      const videoContainer = document.getElementById("videoContainer");
+      const mainContent = document.getElementById("mainContent");
+      const video = document.getElementById("fullVideo");
 
       video.pause();
       video.currentTime = 0;
-      videoContainer.style.display = 'none';
-      mainContent.style.display = 'block';
+      videoContainer.style.display = "none";
+      mainContent.style.display = "block";
     }
 
-    // Eventi per uscita dal fullscreen
-    document.addEventListener('fullscreenchange', () => {
+    // Eventi per uscita dal fullscreen (funzionano su desktop)
+    document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement) {
         exitVideo();
       }
     });
 
-    document.addEventListener('webkitfullscreenchange', () => {
+    document.addEventListener("webkitfullscreenchange", () => {
       if (!document.webkitFullscreenElement) {
         exitVideo();
       }
     });
 
-    document.addEventListener('msfullscreenchange', () => {
+    document.addEventListener("msfullscreenchange", () => {
       if (!document.msFullscreenElement) {
         exitVideo();
       }
     });
   </script>
-
 </body>
 </html>
